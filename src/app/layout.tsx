@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "../components/navbar";
 import { CartProvider } from "../context/cartcontext";
 import { WishlistProvider } from "../context/wishlistcontext";
+import { ClerkProvider } from "@clerk/nextjs";  // Import ClerkProvider
 
 export default function RootLayout({
   children,
@@ -12,13 +13,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <WishlistProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </WishlistProvider>
-        </CartProvider>
+        <ClerkProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </WishlistProvider>
+          </CartProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

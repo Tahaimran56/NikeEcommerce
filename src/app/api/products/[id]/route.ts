@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
-import products from '@/data/products.json'; // Replace with the actual path to your product data
+import products from '../../../../data/products.json';
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   const { id } = params;
-  const product = products.find(
-    (item) => item.productName.toLowerCase().replace(/\s/g, '-') === id
+
+  // Normalize the ID from the URL to match the slugified product name
+  const normalizedId = id.toLowerCase().replace(/[\s']/g, "-");
+
+  // Find the product based on the slugified name
+  const product = products.find((item) =>
+    item.productName.toLowerCase().replace(/[\s']/g, "-") === normalizedId
   );
 
   if (!product) {
